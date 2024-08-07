@@ -16,7 +16,11 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
-app.use("/api/auth", require("./routes/auth"));
+app.get("/", (req, res) => {
+  res.send("Server running on port 5000");
+});
+
+app.use("/api/auth", require("./routes/auth")); //can use at http://localhost:5000/api/hello
 
 const PORT = process.env.PORT || 5000;
 
