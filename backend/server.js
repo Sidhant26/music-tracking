@@ -20,7 +20,9 @@ app.get("/", (req, res) => {
   res.send("Server running on port 5000");
 });
 
-app.use("/api/auth", require("./routes/auth")); //can use at http://localhost:5000/api/hello
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/album", require("./routes/albumRoutes"));
+app.use("/api/artist", require("./routes/artistRoutes"));
 
 const PORT = process.env.PORT || 5000;
 
