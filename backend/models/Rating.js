@@ -6,7 +6,11 @@ const RatingSchema = new mongoose.Schema({
   albumName: { type: String, required: true },
   artistName: { type: String, required: true },
   rating: { type: Number, required: true, min: 1, max: 5 },
-  dateRated: { type: Date, default: Date.now },
+  listenStatus: {
+    type: String,
+    enum: ["not listened", "want to listen", "listened"],
+    default: "not listened",
+  },
 });
 
 const Rating = mongoose.model("Rating", RatingSchema);
