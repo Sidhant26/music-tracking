@@ -1,0 +1,22 @@
+.artist-search {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.artist-search-container {
+  position: absolute;
+  top: 80px; /* Adjust this value to move it up or down */
+  left: 20px; /* Adjust this value to move it left or right */
+  /* width: 800px; Adjust the width as needed */
+}
+
+.search-form {
+  display: flex;
+  gap: 10px;
+}
+
+.search-form .MuiTextField-root,
+.search-form .MuiButton-root {
+  width: 100%;
+}
