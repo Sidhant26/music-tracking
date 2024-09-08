@@ -11,15 +11,15 @@ import {
   Link,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import "./ArtistSearch.css";
+import "./AlbumSearch.css";
 
-const ArtistSearch = () => {
-  const [artistName, setArtistName] = useState("");
-  const [artistInfo, setArtistInfo] = useState(null);
+const AlbumSearch = () => {
+  const [albumName, setAlbumName] = useState("");
+  const [albumInfo, setAlbumInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e) => {
-    setArtistName(e.target.value);
+    setAlbumName(e.target.value);
   };
 
   const handleFormSubmit = async (e) => {
@@ -27,18 +27,52 @@ const ArtistSearch = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/artist/search/${artistName}`
+        `http://localhost:5000/api/album/search/${albumName}`
       );
-      setArtistInfo(response.data);
+      setAlbumInfo(response.data);
     } catch (err) {
-      alert("An error occurred while fetching artist info");
-      setArtistInfo(null);
+      alert("An error occurred while fetching album info");
+      setAlbumInfo(null);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const ArtistLink = styled(Link)({
+  const AlbumPaper = styled(Box)(({ theme }) => ({
+    position: "relative",
+    height: "100%",
+    borderRadius: "10px",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    "&::after": {
+      content: '""',
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: "20%",
+      background: "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.9))",
+      // backdropFilter: "blur(5px)",
+      zIndex: 1,
+    },
+  }));
+
+  const AlbumTitle = styled(Typography)({
+    position: "absolute",
+    bottom: 4,
+    left: 4,
+    right: 4,
+    color: "#fff",
+    zIndex: 2,
+    textShadow: "1px 1px 2px rgba(0,0,0,0.6)",
+    fontWeight: "bold",
+    maxWidth: "100%",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  });
+
+  const AlbumLink = styled(Link)({
     marginTop: "200px",
     color: "#4fc3f7",
     textDecoration: "none",
@@ -48,11 +82,8 @@ const ArtistSearch = () => {
   });
 
   return (
-    <Box
-      sx={{ margin: "0 auto", overflow: "hidden" }}
-      className="artist-search-container"
-    >
-      <h1>Search for an Artist</h1>
+    <Box sx={{ margin: "0 auto" }} className="album-search-container">
+      <h1>Search for an Album</h1>
       <Box
         component="form"
         onSubmit={handleFormSubmit}
@@ -61,7 +92,7 @@ const ArtistSearch = () => {
       >
         <TextField
           id="outlined-helperText"
-          label="Search Artist"
+          label="Search Album"
           onChange={handleInputChange}
           sx={{ maxWidth: "300px" }}
         />
@@ -83,7 +114,7 @@ const ArtistSearch = () => {
           <CircularProgress />
         </Box>
       ) : (
-        artistInfo && (
+        albumInfo && (
           <Box>
             <Grid2
               container
@@ -97,7 +128,7 @@ const ArtistSearch = () => {
                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
               }}
             >
-              {artistInfo.results.artistmatches.artist.map((artist, index) => (
+              {albumInfo.results.albummatches.album.map((album, index) => (
                 <Grid2
                   size={2}
                   item
@@ -107,27 +138,21 @@ const ArtistSearch = () => {
                   md={4}
                   key={index}
                 >
-                  <Paper
+                  <AlbumPaper
                     sx={{
-                      p: 2,
-                      height: "100%",
-                      borderRadius: "10px",
-                      boxShadow: "0 4px 8px rgba(0, 0, 10)",
+                      backgroundImage: `url(${album.image[3]["#text"]})`,
                     }}
                   >
-                    <Typography
-                      variant="h6"
-                      sx={{ fontWeight: "bold", color: "#ffffff", mb: 2 }}
-                    >
-                      {artist.name}
-                    </Typography>
-                    <ArtistLink href={artist.url}>View on last.fm</ArtistLink>
-                    {/* <Typography variant="body2">{artist.mbid}</Typography> */}
-                  </Paper>
+                    <AlbumLink href={album.url}>View on last.fm</AlbumLink>
+                    <AlbumTitle variant="subtitle1" noWrap>
+                      {album.artist} - {album.name}
+                    </AlbumTitle>
+                    {/* <Typography variant="body2">{album.mbid}</Typography> */}
+                  </AlbumPaper>
                 </Grid2>
               ))}
             </Grid2>
-            {/* <pre>{JSON.stringify(artistInfo, null, 2)}</pre> */}
+            {/* <pre>{JSON.stringify(albumInfo, null, 2)}</pre> */}
           </Box>
         )
       )}
@@ -135,4 +160,4 @@ const ArtistSearch = () => {
   );
 };
 
-export default ArtistSearch;
+export default AlbumSearch;

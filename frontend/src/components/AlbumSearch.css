@@ -1,0 +1,21 @@
+.album-search {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.album-search-container {
+  position: absolute;
+  top: 80px;
+  left: 20px;
+}
+
+.search-form {
+  display: flex;
+  gap: 10px;
+}
+
+.search-form .MuiTextField-root,
+.search-form .MuiButton-root {
+  width: 100%;
+}

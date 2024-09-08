@@ -16,9 +16,9 @@ import AdbIcon from "@mui/icons-material/Adb";
 const pages = [
   { name: "Artist Search", path: "/artist-search" },
   { name: "Album Search", path: "/album-search" },
-  { name: "My Ratings", path: "/my-ratings" },
+  // { name: "My Ratings", path: "/my-ratings" },
 ];
-const settings = ["Logout"];
+const settings = ["My ratings", "Logout"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -40,14 +40,14 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
             component="a"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
