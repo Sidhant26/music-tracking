@@ -96,4 +96,30 @@ router.get("/album-tags/:artistName/:albumName", async (req, res) => {
   }
 });
 
+router.get("/:mbid", async (req, res) => {
+  try {
+    let mbid = req.params.mbid;
+
+    if (!mbid) {
+      return res.status(400).json({ error: "Album MBID is required" });
+    }
+
+    const response = await axios.get(LASTFM_API_URL, {
+      params: {
+        method: "album.getinfo",
+        api_key: LASTFM_API_KEY,
+        mbid: mbid,
+        format: "json",
+      },
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error getting album info:", error.message);
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching album information" });
+  }
+});
+
 module.exports = router;

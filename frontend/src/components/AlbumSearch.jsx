@@ -138,17 +138,36 @@ const AlbumSearch = () => {
                   md={4}
                   key={index}
                 >
-                  <AlbumPaper
-                    sx={{
-                      backgroundImage: `url(${album.image[3]["#text"]})`,
-                    }}
-                  >
-                    <AlbumLink href={album.url}>View on last.fm</AlbumLink>
-                    <AlbumTitle variant="subtitle1" noWrap>
-                      {album.artist} - {album.name}
-                    </AlbumTitle>
-                    {/* <Typography variant="body2">{album.mbid}</Typography> */}
-                  </AlbumPaper>
+                  {album.mbid ? (
+                    <Link
+                      href={`/album/${album.mbid}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <AlbumPaper
+                        sx={{
+                          backgroundImage: `url(${album.image[3]["#text"]})`,
+                        }}
+                      >
+                        <AlbumLink href={album.url}>View on last.fm</AlbumLink>
+                        <AlbumTitle variant="subtitle1" noWrap>
+                          {album.artist} - {album.name}
+                        </AlbumTitle>
+                        {/* <Typography variant="body2">{album.mbid}</Typography> */}
+                      </AlbumPaper>
+                    </Link>
+                  ) : (
+                    <AlbumPaper
+                      sx={{
+                        backgroundImage: `url(${album.image[3]["#text"]})`,
+                      }}
+                    >
+                      <AlbumLink href={album.url}>View on last.fm</AlbumLink>
+                      <AlbumTitle variant="subtitle1" noWrap>
+                        {album.artist} - {album.name}
+                      </AlbumTitle>
+                      {/* <Typography variant="body2">{album.mbid}</Typography> */}
+                    </AlbumPaper>
+                  )}
                 </Grid2>
               ))}
             </Grid2>

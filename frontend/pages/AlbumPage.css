@@ -1,0 +1,12 @@
+h1,
+h3 {
+  font-weight: lighter;
+  text-align: left;
+  margin-top: 0;
+  width: 800px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+hr {
+  width: 900px;
+}

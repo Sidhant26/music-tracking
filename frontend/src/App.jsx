@@ -17,6 +17,7 @@ import ArtistSearch from "./components/ArtistSearch";
 import Navbar from "./components/Navbar";
 import Home from "../pages/Home";
 import AlbumSearch from "./components/AlbumSearch";
+import AlbumPage from "../pages/AlbumPage";
 
 const darkTheme = createTheme({
   palette: {
@@ -45,6 +46,10 @@ function App() {
     {
       path: "/album-search",
       element: <AlbumSearch />,
+    },
+    {
+      path: "/album/:mbid",
+      element: <AlbumPage />,
     },
   ]);
 
