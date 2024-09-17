@@ -52,6 +52,7 @@ const ArtistSearch = () => {
       sx={{ margin: "0 auto", overflow: "hidden" }}
       className="artist-search-container"
     >
+      <br></br>
       <h1>Search for an Artist</h1>
       <Box
         component="form"
@@ -92,7 +93,7 @@ const ArtistSearch = () => {
                 p: 3,
                 m: 1.5,
                 height: "100%",
-                backgroundColor: "#1e1e1e",
+                backgroundColor: "#191C28",
                 borderRadius: "10px",
                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
               }}
@@ -107,23 +108,49 @@ const ArtistSearch = () => {
                   md={4}
                   key={index}
                 >
-                  <Paper
-                    sx={{
-                      p: 2,
-                      height: "100%",
-                      borderRadius: "10px",
-                      boxShadow: "0 4px 8px rgba(0, 0, 10)",
-                    }}
-                  >
-                    <Typography
-                      variant="h6"
-                      sx={{ fontWeight: "bold", color: "#ffffff", mb: 2 }}
+                  {artist.mbid ? (
+                    <Link
+                      href={`/artist/${artist.mbid}`}
+                      style={{ textDecoration: "none" }}
                     >
-                      {artist.name}
-                    </Typography>
-                    <ArtistLink href={artist.url}>View on last.fm</ArtistLink>
-                    {/* <Typography variant="body2">{artist.mbid}</Typography> */}
-                  </Paper>
+                      <Paper
+                        sx={{
+                          p: 2,
+                          height: "100%",
+                          borderRadius: "10px",
+                          boxShadow: "0 4px 8px rgba(0, 0, 10)",
+                        }}
+                      >
+                        <Typography
+                          variant="h6"
+                          sx={{ fontWeight: "bold", color: "#ffffff", mb: 2 }}
+                        >
+                          {artist.name}
+                        </Typography>
+                        <ArtistLink href={artist.url}>
+                          View on last.fm
+                        </ArtistLink>
+                      </Paper>
+                    </Link>
+                  ) : (
+                    <Paper
+                      sx={{
+                        p: 2,
+                        height: "100%",
+                        borderRadius: "10px",
+                        boxShadow: "0 4px 8px rgba(0, 0, 10)",
+                      }}
+                    >
+                      <Typography
+                        variant="h6"
+                        sx={{ fontWeight: "bold", color: "#ffffff", mb: 2 }}
+                      >
+                        {artist.name}
+                      </Typography>
+                      <ArtistLink href={artist.url}>View on last.fm</ArtistLink>
+                      {/* <Typography variant="body2">{artist.mbid}</Typography> */}
+                    </Paper>
+                  )}
                 </Grid2>
               ))}
             </Grid2>

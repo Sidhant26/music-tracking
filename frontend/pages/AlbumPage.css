@@ -10,3 +10,18 @@ h3 {
 hr {
   width: 900px;
 }
+
+h3 {
+  margin-bottom: 13px;
+}
+
+.rating-input {
+  height: 55px;
+  width: 90px;
+  background-color: #03101d;
+  border: none;
+  color: #fff;
+  font-size: 3.3rem;
+  margin-right: 1px;
+  text-align: right;
+}

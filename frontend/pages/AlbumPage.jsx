@@ -7,7 +7,10 @@ import {
   Grid2,
   Paper,
   Chip,
-  Stack,
+  TextField,
+  List,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 import axios from "axios";
 import "./AlbumPage.css";
@@ -16,6 +19,7 @@ function AlbumPage() {
   const [album, setAlbum] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [rating, setRating] = useState("");
   const { mbid } = useParams();
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -29,8 +33,13 @@ function AlbumPage() {
     }),
   }));
 
+  function getTime(duration) {
+    const minutes = Math.floor(duration / 60);
+    const seconds = duration - minutes * 60;
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  }
+
   useEffect(() => {
-    console.log("mbid has changed:", mbid);
     const fetchAlbumDetails = async () => {
       try {
         setLoading(true);
@@ -39,7 +48,6 @@ function AlbumPage() {
         );
         setAlbum(response.data.album);
         setLoading(false);
-        console.log(response.data.album);
       } catch (err) {
         setError("Failed to fetch album details");
         setLoading(false);
@@ -55,6 +63,7 @@ function AlbumPage() {
         <br></br> <CircularProgress />
       </div>
     );
+
   if (error) return <div>{error}</div>;
   if (!album) return <div>No album found</div>;
 
@@ -74,8 +83,26 @@ function AlbumPage() {
               }}
             ></Box>
           </Item>
+          <br></br>
+          <List dense={false}>
+            {album.tracks.track.map((track, index) => (
+              <ListItem
+                key={index}
+                sx={{
+                  backgroundColor: index % 2 === 0 ? "#13264C" : "#112144",
+                  height: "32px",
+                }}
+              >
+                <ListItemText primary={`${index + 1}.  ${track.name}`} />
+                <ListItemText
+                  sx={{ textAlign: "right" }}
+                  primary={getTime(track.duration)}
+                />
+              </ListItem>
+            ))}
+          </List>
         </Grid2>
-        <Grid2 size={4}>
+        <Grid2 size={4} sx={{ maxHeight: 600 }}>
           <h1>{album.name}</h1>
           <hr></hr>
           <h3>
@@ -116,13 +143,82 @@ function AlbumPage() {
               />
             ))}
           </h3>
+          {album.wiki && (
+            <h3>
+              {" "}
+              <span
+                style={{
+                  fontWeight: "lighter",
+                  marginRight: "2rem",
+                  color: "#9ca3af",
+                }}
+              >
+                Released
+              </span>{" "}
+              {album.wiki.published}
+            </h3>
+          )}
+          <div style={{ display: "flex" }}>
+            <h3>
+              {" "}
+              <span
+                style={{
+                  fontWeight: "lighter",
+                  color: "#9ca3af",
+                }}
+              >
+                Rating
+              </span>{" "}
+            </h3>
+            <input
+              type="number"
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+              className="rating-input"
+              min="0"
+              max="10"
+            />
+            <h1>/10</h1>
+          </div>
+          <h3>
+            {" "}
+            <span
+              style={{
+                fontWeight: "lighter",
+                marginRight: "2rem",
+                color: "#9ca3af",
+              }}
+            >
+              About
+            </span>{" "}
+            {album.wiki && (
+              <>
+                {(() => {
+                  const summary = album.wiki.summary;
+                  const truncated = summary.length >= 417 ? true : false;
+                  const displayText = truncated
+                    ? summary.substring(0, 417)
+                    : summary;
+
+                  return (
+                    <>
+                      {displayText}
+                      {truncated && <a href={album.url}> Learn more</a>}
+                    </>
+                  );
+                })()}
+              </>
+            )}
+          </h3>
+          <br></br>
+          <TextField
+            multiline
+            label="Enter your review or notes here"
+            id="fullWidth"
+            sx={{ width: "800px" }}
+          />
         </Grid2>
-        {/* <Grid2 size={4}>
-          <Item>size=4</Item>
-        </Grid2> */}
-        <Grid2 size={8}>
-          <Item>size=8</Item>
-        </Grid2>
+        <Grid2 size={8}></Grid2>
       </Grid2>
     </div>
   );

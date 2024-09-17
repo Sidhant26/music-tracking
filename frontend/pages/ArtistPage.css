@@ -1,0 +1,34 @@
+hr {
+  width: 1200px;
+}
+
+.best-albums {
+  overflow: auto;
+  display: flex;
+  scroll-snap-type: x mandatory;
+  height: 255px;
+}
+
+.best-albums::-webkit-scrollbar {
+  /* Might not work on all browsers */
+  height: 10px;
+}
+
+.best-albums::-webkit-scrollbar-track {
+  background: hsl(249, 72%, 44%);
+  border-radius: 100vh;
+  margin-inline: 1em; /* Margin left and right  */
+}
+
+.best-albums::-webkit-scrollbar-thumb {
+  background: hsl(248, 77%, 32%);
+  border-radius: 100vh;
+}
+
+.best-albums .album {
+  height: 200px;
+  width: 200px;
+  margin-right: 5px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}

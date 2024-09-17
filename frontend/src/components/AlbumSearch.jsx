@@ -83,6 +83,7 @@ const AlbumSearch = () => {
 
   return (
     <Box sx={{ margin: "0 auto" }} className="album-search-container">
+      <br></br>
       <h1>Search for an Album</h1>
       <Box
         component="form"
@@ -123,7 +124,7 @@ const AlbumSearch = () => {
                 p: 3,
                 m: 1.5,
                 height: "100%",
-                backgroundColor: "#1e1e1e",
+                backgroundColor: "#191C28",
                 borderRadius: "10px",
                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
               }}
