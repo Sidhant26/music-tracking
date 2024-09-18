@@ -70,7 +70,7 @@ function ArtistPage() {
       <h2> Check out their best albums: </h2>
       <div className="best-albums">
         {bestAlbums.map((album) => (
-          <div key={album.mbid} className="album">
+          <div key={album.url} className="album">
             {album.mbid ? (
               <Link href={`/album/${album.mbid}`}>
                 <img src={album.image[2]["#text"]} alt={album.name} />

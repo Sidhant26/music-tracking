@@ -1,11 +1,6 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import {
   BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
@@ -15,10 +10,12 @@ import "./App.css";
 import "./components/ArtistSearch";
 import ArtistSearch from "./components/ArtistSearch";
 import Navbar from "./components/Navbar";
-import Home from "../pages/Home";
+import Home from "./pages/Home";
 import AlbumSearch from "./components/AlbumSearch";
-import AlbumPage from "../pages/AlbumPage";
-import ArtistPage from "../pages/ArtistPage";
+import AlbumPage from "./pages/AlbumPage";
+import ArtistPage from "./pages/ArtistPage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const darkTheme = createTheme({
   palette: {
@@ -54,6 +51,14 @@ function App() {
     {
       path: "artist/:mbid",
       element: <ArtistPage />,
+    },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "/register",
+      element: <Register />,
     },
   ]);
 

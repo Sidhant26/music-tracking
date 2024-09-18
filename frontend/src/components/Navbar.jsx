@@ -18,7 +18,8 @@ const pages = [
   { name: "Album Search", path: "/album-search" },
   // { name: "My Ratings", path: "/my-ratings" },
 ];
-const settings = ["My ratings", "Logout"];
+
+// const settings = [{name:"My ratings", path:"/my-ratings"}, {name:"Logout", }];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -38,6 +39,10 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  function logout() {
+    localStorage.removeItem("token");
+  }
 
   return (
     <AppBar position="sticky">
@@ -102,7 +107,7 @@ function Navbar() {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -114,7 +119,7 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            LOGGER
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
@@ -131,7 +136,7 @@ function Navbar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar />
               </IconButton>
             </Tooltip>
             <Menu
@@ -150,13 +155,12 @@ function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: "center" }}>
-                    {setting}
-                  </Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={() => window.location.assign("/my-ratings")}>
+                <Typography sx={{ textAlign: "center" }}>My ratings</Typography>
+              </MenuItem>
+              <MenuItem onClick={logout}>
+                <Typography sx={{ textAlign: "center" }}>Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

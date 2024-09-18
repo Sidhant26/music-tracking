@@ -96,7 +96,7 @@ function AlbumPage() {
                 <ListItemText primary={`${index + 1}.  ${track.name}`} />
                 <ListItemText
                   sx={{ textAlign: "right" }}
-                  primary={getTime(track.duration)}
+                  primary={track.duration && getTime(track.duration)}
                 />
               </ListItem>
             ))}
@@ -104,7 +104,6 @@ function AlbumPage() {
         </Grid2>
         <Grid2 size={4} sx={{ maxHeight: 600 }}>
           <h1>{album.name}</h1>
-          <hr></hr>
           <h3>
             {" "}
             <span
