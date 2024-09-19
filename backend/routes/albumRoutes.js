@@ -32,7 +32,6 @@ router.get("/search/:albumName", async (req, res) => {
 });
 
 router.get("/search/:artistName/:albumName", async (req, res) => {
-  //get all info about an album
   try {
     let { artistName, albumName } = req.params;
 

@@ -1,9 +1,5 @@
 import { useState } from "react";
-import {
-  BrowserRouter as Router,
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import "./App.css";
@@ -16,6 +12,8 @@ import AlbumPage from "./pages/AlbumPage";
 import ArtistPage from "./pages/ArtistPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ProtectedRoutes from "./components/ProtectedRoutes";
+import ErrorPage from "./pages/ErrorPage";
 
 const darkTheme = createTheme({
   palette: {
@@ -35,22 +33,7 @@ function App() {
     {
       path: "/",
       element: <Home />,
-    },
-    {
-      path: "/artist-search",
-      element: <ArtistSearch />,
-    },
-    {
-      path: "/album-search",
-      element: <AlbumSearch />,
-    },
-    {
-      path: "/album/:mbid",
-      element: <AlbumPage />,
-    },
-    {
-      path: "artist/:mbid",
-      element: <ArtistPage />,
+      errorElement: <ErrorPage />,
     },
     {
       path: "/login",
@@ -59,6 +42,27 @@ function App() {
     {
       path: "/register",
       element: <Register />,
+    },
+    {
+      element: <ProtectedRoutes />,
+      children: [
+        {
+          path: "/artist-search",
+          element: <ArtistSearch />,
+        },
+        {
+          path: "/album-search",
+          element: <AlbumSearch />,
+        },
+        {
+          path: "/album/:mbid",
+          element: <AlbumPage />,
+        },
+        {
+          path: "artist/:mbid",
+          element: <ArtistPage />,
+        },
+      ],
     },
   ]);
 

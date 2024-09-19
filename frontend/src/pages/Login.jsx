@@ -52,7 +52,7 @@ function Login() {
         </Button>
       </form>
       <p>
-        Not registered? <Link href="/signup">Sign up here</Link>
+        Not registered? <Link href="/register">Sign up here</Link>
       </p>
       <Button onClick={testApi}>Test API</Button>
     </>

@@ -52,7 +52,6 @@ const AlbumSearch = () => {
       right: 0,
       height: "20%",
       background: "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.9))",
-      // backdropFilter: "blur(5px)",
       zIndex: 1,
     },
   }));

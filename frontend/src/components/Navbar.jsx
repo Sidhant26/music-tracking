@@ -12,14 +12,12 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { logout } from "../services/api";
 
 const pages = [
   { name: "Artist Search", path: "/artist-search" },
   { name: "Album Search", path: "/album-search" },
-  // { name: "My Ratings", path: "/my-ratings" },
 ];
-
-// const settings = [{name:"My ratings", path:"/my-ratings"}, {name:"Logout", }];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -39,10 +37,6 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  function logout() {
-    localStorage.removeItem("token");
-  }
 
   return (
     <AppBar position="sticky">

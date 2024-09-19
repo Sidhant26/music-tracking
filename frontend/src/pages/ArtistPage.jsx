@@ -12,29 +12,6 @@ function ArtistPage() {
   const [topAlbums, setTopAlbums] = useState([]);
   const [bestAlbums, setBestAlbums] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchArtistDetails = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const response = await axios.get(
-  //         `http://localhost:5000/api/artist/${mbid}`
-  //       );
-  //       if (response.data && response.data.artist) {
-  //         setArtist(response.data.artist);
-  //       } else {
-  //         setError("Artist data not found in the response");
-  //       }
-
-  //       setLoading(false);
-  //     } catch (err) {
-  //       setError("Failed to fetch artist details");
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchArtistDetails();
-  // }, [mbid]);
-
   useEffect(() => {
     const fetchTopAlbums = async () => {
       try {
@@ -52,8 +29,6 @@ function ArtistPage() {
     };
     fetchTopAlbums();
   }, [mbid]);
-
-  // console.log(bestAlbums);
 
   if (loading)
     return (

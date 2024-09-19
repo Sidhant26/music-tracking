@@ -9,7 +9,6 @@ const api = axios.create({
   },
 });
 
-//a function for a test component with /hello that just returns hello world:
 export const test = async () => {
   try {
     const response = await api.get("/hello");
@@ -56,8 +55,9 @@ export const login = async (username, password) => {
 
 export const logout = () => {
   localStorage.removeItem("token");
+  window.location.assign("/login");
 };
 
 export const getAuthToken = () => localStorage.getItem("token");
 
-export const isAuthenticated = () => !!getAuthToken();
+export const isAuthenticated = () => !!getAuthToken(); //!! converts to boolean

@@ -4,6 +4,21 @@ import { useNavigate } from "react-router-dom";
 import { register, test } from "../services/api";
 
 function Register() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const result = await register(username, password);
+    if (result.success) {
+      navigate("/");
+    } else {
+      setError(result.message);
+    }
+  };
+
   return (
     <>
       <h1> Register your account here</h1>
@@ -31,6 +46,7 @@ function Register() {
           Register
         </Button>
       </form>
+      <Link href="/login">Already registered? Login here</Link>
     </>
   );
 }
