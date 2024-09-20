@@ -137,4 +137,30 @@ router.get("/tags/:mbid", async (req, res) => {
   }
 });
 
+router.get("/similar/:mbid", async (req, res) => {
+  try {
+    let mbid = req.params.mbid;
+
+    if (!mbid) {
+      return res.status(400).json({ error: "mbid is required" });
+    }
+
+    const response = await axios.get(LASTFM_API_URL, {
+      params: {
+        method: "artist.getSimilar",
+        api_key: LASTFM_API_KEY,
+        mbid: mbid,
+        format: "json",
+      },
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error getting similar artists:", error.message);
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching similar artists" });
+  }
+});
+
 module.exports = router;

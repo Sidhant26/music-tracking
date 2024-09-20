@@ -14,6 +14,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import ErrorPage from "./pages/ErrorPage";
+import MyRatings from "./pages/MyRatings";
 
 const darkTheme = createTheme({
   palette: {
@@ -61,6 +62,10 @@ function App() {
         {
           path: "artist/:mbid",
           element: <ArtistPage />,
+        },
+        {
+          path: "my-ratings",
+          element: <MyRatings />,
         },
       ],
     },

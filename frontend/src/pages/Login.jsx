@@ -15,6 +15,7 @@ function Login() {
     if (result.success) {
       navigate("/");
     } else {
+      alert(result.message);
       setError(result.message);
     }
   };
@@ -27,6 +28,7 @@ function Login() {
   return (
     <>
       <h1> Login to your account here</h1>
+
       <form onSubmit={handleSubmit}>
         <TextField
           label="Username"

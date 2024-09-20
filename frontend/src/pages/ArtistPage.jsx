@@ -11,6 +11,7 @@ function ArtistPage() {
   const [loading, setLoading] = useState(true);
   const [topAlbums, setTopAlbums] = useState([]);
   const [bestAlbums, setBestAlbums] = useState([]);
+  const [similar, setSimilar] = useState([]);
 
   useEffect(() => {
     const fetchTopAlbums = async () => {
@@ -29,6 +30,24 @@ function ArtistPage() {
     };
     fetchTopAlbums();
   }, [mbid]);
+
+  useEffect(() => {
+    const getSimilar = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `http://localhost:5000/api/artist/similar/${mbid}`
+        );
+        setSimilar(response.data.similarartists.artist.slice(0, 12));
+        console.log(response.data.similarartists.artist);
+        setLoading(false);
+      } catch (err) {
+        console.error("Failed to fetch similar artists", err);
+        setLoading(false);
+      }
+    };
+    getSimilar();
+  }, []);
 
   if (loading)
     return (
@@ -54,6 +73,23 @@ function ArtistPage() {
               <img src={album.image[2]["#text"]} alt={album.name} />
             )}
             <p> {album.name} </p>
+          </div>
+        ))}
+      </div>
+      <br></br>
+      <br></br>
+      <h2> If you like them you'll also like: </h2>
+      <div className="best-albums">
+        {similar.map((artist) => (
+          <div key={artist.url} className="album">
+            {artist.mbid ? (
+              <Link href={`/artist/${artist.mbid}`}>
+                <img src={artist.image[2]["#text"]} alt={artist.name} />
+              </Link>
+            ) : (
+              <img src={artist.image[2]["#text"]} alt={artist.name} />
+            )}
+            <p> {artist.name} </p>
           </div>
         ))}
       </div>

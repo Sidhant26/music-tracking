@@ -11,6 +11,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  Button,
 } from "@mui/material";
 import axios from "axios";
 import "./AlbumPage.css";
@@ -20,6 +21,8 @@ function AlbumPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [rating, setRating] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [notes, setNotes] = useState("");
   const { mbid } = useParams();
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -56,6 +59,58 @@ function AlbumPage() {
 
     fetchAlbumDetails();
   }, [mbid]);
+
+  useEffect(() => {
+    const fetchAlbumAndRating = async () => {
+      try {
+        setLoading(true);
+        const [albumResponse, ratingResponse] = await Promise.all([
+          // run asyncs concurrently
+          axios.get(`http://localhost:5000/api/album/${mbid}`),
+          axios.get(
+            `http://localhost:5000/api/rating/${mbid}?username=${localStorage.getItem(
+              "username"
+            )}`
+          ),
+        ]);
+
+        setAlbum(albumResponse.data.album);
+
+        if (ratingResponse.data) {
+          setRating(ratingResponse.data.rating);
+          setNotes(ratingResponse.data.notes || "");
+        }
+
+        setLoading(false);
+      } catch (err) {
+        // console.error("Error fetching album details or rating:", err);
+        // setError("Failed to fetch album details or rating");
+        setLoading(false);
+      }
+    };
+
+    fetchAlbumAndRating();
+  }, [mbid]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      await axios.post(`http://localhost:5000/api/rating/`, {
+        username: localStorage.getItem("username"),
+        albumMbid: mbid,
+        albumName: album.name,
+        artistName: album.artist,
+        rating: rating,
+        notes: notes,
+      });
+      alert("Submitted successfully");
+    } catch (err) {
+      alert("Error submitting rating and notes");
+      setError("Failed to submit rating and notes");
+    }
+    setSubmitting(false);
+  };
 
   if (loading)
     return (
@@ -142,7 +197,32 @@ function AlbumPage() {
               />
             ))}
           </h3>
-          {album.wiki && (
+
+          <form onSubmit={handleSubmit}>
+            <div style={{ display: "flex" }}>
+              <h3>
+                {" "}
+                <span
+                  style={{
+                    fontWeight: "lighter",
+                    color: "#9ca3af",
+                  }}
+                >
+                  Rating
+                </span>{" "}
+              </h3>
+              <input
+                type="number"
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+                className="rating-input"
+                min="0"
+                max="10"
+                step="0.1"
+                required
+              />
+              <h1>/10</h1>
+            </div>
             <h3>
               {" "}
               <span
@@ -152,70 +232,49 @@ function AlbumPage() {
                   color: "#9ca3af",
                 }}
               >
-                Released
+                About
               </span>{" "}
-              {album.wiki.published}
-            </h3>
-          )}
-          <div style={{ display: "flex" }}>
-            <h3>
-              {" "}
-              <span
-                style={{
-                  fontWeight: "lighter",
-                  color: "#9ca3af",
-                }}
-              >
-                Rating
-              </span>{" "}
-            </h3>
-            <input
-              type="number"
-              value={rating}
-              onChange={(e) => setRating(e.target.value)}
-              className="rating-input"
-              min="0"
-              max="10"
-            />
-            <h1>/10</h1>
-          </div>
-          <h3>
-            {" "}
-            <span
-              style={{
-                fontWeight: "lighter",
-                marginRight: "2rem",
-                color: "#9ca3af",
-              }}
-            >
-              About
-            </span>{" "}
-            {album.wiki && (
-              <>
-                {(() => {
-                  const summary = album.wiki.summary;
-                  const truncated = summary.length >= 417 ? true : false;
-                  const displayText = truncated
-                    ? summary.substring(0, 417)
-                    : summary;
+              {album.wiki && (
+                <>
+                  {(() => {
+                    const summary = album.wiki.content;
+                    const truncated = summary.length >= 417 ? true : false;
+                    const displayText = truncated
+                      ? summary.substring(0, 417)
+                      : summary;
 
-                  return (
-                    <>
-                      {displayText}
-                      {truncated && <a href={album.url}> Learn more</a>}
-                    </>
-                  );
-                })()}
-              </>
-            )}
-          </h3>
-          <br></br>
-          <TextField
-            multiline
-            label="Enter your review or notes here"
-            id="fullWidth"
-            sx={{ width: "800px" }}
-          />
+                    return (
+                      <>
+                        {displayText}
+                        {truncated && <a href={album.url}> Learn more</a>}
+                      </>
+                    );
+                  })()}
+                </>
+              )}
+            </h3>
+            <br></br>
+            <div style={{ display: "inline-block" }}>
+              <TextField
+                multiline
+                label="Write your thoughts about the album here"
+                id="fullWidth"
+                sx={{ width: "800px" }}
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+              />
+              <br></br>
+              <br></br>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={submitting}
+              >
+                {submitting ? "Submitting..." : "Submit Rating and Notes"}
+              </Button>
+            </div>
+          </form>
         </Grid2>
         <Grid2 size={8}></Grid2>
       </Grid2>

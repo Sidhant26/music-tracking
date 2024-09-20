@@ -23,6 +23,7 @@ export const register = async (username, password) => {
     const response = await api.post("/register", { username, password });
     if (response.data.status === "ok") {
       localStorage.setItem("token", response.data.user);
+      localStorage.setItem("username", username);
       return { success: true, message: response.data.message };
     }
     return { success: false, message: response.data.message };
@@ -41,6 +42,7 @@ export const login = async (username, password) => {
     const response = await api.post("/login", { username, password });
     if (response.data.status === "ok") {
       localStorage.setItem("token", response.data.user);
+      localStorage.setItem("username", username);
       return { success: true };
     }
     return { success: false, message: response.data.message };
@@ -55,6 +57,7 @@ export const login = async (username, password) => {
 
 export const logout = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("username");
   window.location.assign("/login");
 };
 
