@@ -83,8 +83,6 @@ function AlbumPage() {
 
         setLoading(false);
       } catch (err) {
-        // console.error("Error fetching album details or rating:", err);
-        // setError("Failed to fetch album details or rating");
         setLoading(false);
       }
     };
@@ -96,6 +94,7 @@ function AlbumPage() {
     e.preventDefault();
     setSubmitting(true);
     try {
+      const tagNames = album.tags.tag.map((tag) => tag.name);
       await axios.post(`http://localhost:5000/api/rating/`, {
         username: localStorage.getItem("username"),
         albumMbid: mbid,
@@ -103,6 +102,7 @@ function AlbumPage() {
         artistName: album.artist,
         rating: rating,
         notes: notes,
+        tags: tagNames,
       });
       alert("Submitted successfully");
     } catch (err) {

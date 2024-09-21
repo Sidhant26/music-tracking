@@ -5,7 +5,6 @@ import { Box } from "@mui/material";
 
 function Home() {
   const username = localStorage.getItem("username");
-  console.log(username);
 
   return (
     <div>

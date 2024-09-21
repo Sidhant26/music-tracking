@@ -7,6 +7,7 @@ const RatingSchema = new mongoose.Schema({
   artistName: { type: String, required: true },
   rating: { type: Number, required: true, min: 1, max: 10 },
   notes: { type: String, required: false },
+  tags: { type: [String], required: false },
 });
 
 const Rating = mongoose.model("Rating", RatingSchema);

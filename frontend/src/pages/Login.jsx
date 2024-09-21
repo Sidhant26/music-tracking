@@ -22,7 +22,6 @@ function Login() {
 
   const testApi = async () => {
     const result = await test();
-    console.log(result);
   };
 
   return (

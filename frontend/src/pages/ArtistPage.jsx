@@ -39,7 +39,6 @@ function ArtistPage() {
           `http://localhost:5000/api/artist/similar/${mbid}`
         );
         setSimilar(response.data.similarartists.artist.slice(0, 12));
-        console.log(response.data.similarartists.artist);
         setLoading(false);
       } catch (err) {
         console.error("Failed to fetch similar artists", err);
